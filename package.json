@@ -1,0 +1,74 @@
+{
+  "name": "log-harnest",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "xo": {
+    "prettier": true,
+    "plugins": [
+      "simple-import-sort",
+      "unused-imports"
+    ],
+    "rules": {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+      "unused-imports/no-unused-imports": "error"
+    },
+    "ignorePatterns": [
+      "node_modules"
+    ]
+  },
+  "prettier": {
+    "editorconfig": true,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "printWidth": 120,
+    "proseWrap": "preserve",
+    "quoteProps": "consistent",
+    "semi": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": false,
+    "trailingComma": "all"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/koa": "^2.13.5",
+    "@types/koa__cors": "^3.3.0",
+    "@types/koa__router": "^12.0.0",
+    "@types/koa-static": "^4.0.2",
+    "@types/node": "^18.11.18",
+    "eslint-plugin-simple-import-sort": "^9.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "pino-pretty": "^9.1.1",
+    "prettier": "^2.8.3",
+    "xo": "^0.53.1"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
+    "@leafac/sqlite": "^4.0.0",
+    "bootstrap": "^5.2.3",
+    "config": "^3.3.8",
+    "htm": "^3.1.1",
+    "koa": "^2.14.1",
+    "koa-static": "^5.0.0",
+    "pino": "^8.8.0",
+    "preact": "^10.11.3",
+    "react-inspector": "^6.0.1"
+  },
+  "engines": {
+    "node": "18.13.*"
+  }
+}

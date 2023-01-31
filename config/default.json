@@ -1,0 +1,9 @@
+{
+  "database": {
+    "path": "./data/app.db",
+    "migrations": {
+      "path": "./src/database/migrations"
+    }
+  },
+  "sources": {}
+}

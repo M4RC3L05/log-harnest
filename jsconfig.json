@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "#src/*": ["./src/*"]
+    }
+  }
+}
