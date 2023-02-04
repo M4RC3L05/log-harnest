@@ -34,7 +34,6 @@ export const resolveLevel = (log, maps, def) => {
   }
 
   if (typeof levelFromParsedData === "number") {
-    // @ts-ignore
     levelFromParsedData = logLevels.labels[levelFromParsedData];
 
     if (!levelFromParsedData) {
@@ -72,4 +71,11 @@ export const resolveTimestamp = (log, maps, def) => {
  */
 export const resolveMessage = (log, maps, def) => {
   return log?.[maps?.message] ?? def;
+};
+
+/**
+ * @param { number } level
+ */
+export const resolveLogName = (level) => {
+  return logLevels.labels[level];
 };
