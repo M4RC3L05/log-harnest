@@ -4,7 +4,7 @@ import { setTimeout } from "node:timers/promises";
 import sql from "@leafac/sqlite";
 import config from "config";
 
-import { db } from "#src/database/db.js";
+import { db } from "#src/database/index.js";
 import { logger } from "#src/logger/logger.js";
 import * as logResolvers from "#src/resolvers/log-resolvers.js";
 import * as abortControllerUtils from "#src/utils/abort-controller.js";
@@ -48,7 +48,7 @@ class UnparsableLogLineError extends Error {
  */
 
 /**
- * @param {Pick<Buffer, "get" | "count" | "empty">} bufferInterface
+ * @param { Pick<Buffer, "get" | "count" | "empty"> } bufferInterface
  */
 const flusher = (bufferInterface) => {
   return () => {
@@ -75,15 +75,20 @@ const flusher = (bufferInterface) => {
           name: logResolvers.resolveName(bufferLine.logLineParsed, maps, bufferLine.source.name),
           level: logResolvers.resolveLevel(bufferLine.logLineParsed, maps, "info"),
           timestamp: logResolvers.resolveTimestamp(bufferLine.logLineParsed, maps, bufferLine.timestamp),
+          message: logResolvers.resolveMessage(
+            bufferLine.logLineParsed,
+            maps,
+            bufferLine.logLineParsed?.message ?? bufferLine.logLineParsed?.msg ?? "",
+          ),
           data: bufferLine.logLine,
         };
 
-        return sql`(${logRow.name}, ${logRow.level}, ${logRow.timestamp}, ${logRow.data})`;
+        return sql`(${logRow.name}, ${logRow.level}, ${logRow.message}, ${logRow.timestamp}, ${logRow.data})`;
       });
 
     db.run(sql`
       insert into "logs"
-      ("name", "level", "timestamp", "data")
+      ("name", "level", "message", "timestamp", "data")
       values
       $${sqlUtils.join(logValues, sql`,`)}
     `);
@@ -137,6 +142,9 @@ const timeoutFlusher = ({ flush, signal }) => {
 
 export const app = () => {
   const /** @type { Record<string, LogSource> } */ sources = config.get("sources");
+
+  log.info({ sources }, "Watching given sources");
+
   const tails = Object.values(sources).map((r) => {
     return {
       source: r,

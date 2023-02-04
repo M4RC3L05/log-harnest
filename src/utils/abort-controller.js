@@ -1,5 +1,5 @@
 /**
- * @param  {...AbortSignal} abortSignals
+ * @param  { AbortSignal[] } abortSignals
  */
 export const any = (...abortSignals) => {
   const aggregatedAbortController = new AbortController();

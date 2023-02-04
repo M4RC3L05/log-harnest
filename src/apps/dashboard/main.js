@@ -1,12 +1,15 @@
 import process from "node:process";
 
+import config from "config";
+
 import { app } from "#src/apps/dashboard/app.js";
 import { logger } from "#src/logger/logger.js";
 import { onProcessSignals } from "#src/utils/process.js";
 
 const log = logger("dashboard");
+const { host, port } = config.get("apps.dashboard");
 
-const server = app().listen(4322, "127.0.0.1", () => {
+const server = app().listen(port, host, () => {
   log.info("Serving");
 });
 

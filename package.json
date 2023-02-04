@@ -47,9 +47,10 @@
     "@types/koa": "^2.13.5",
     "@types/koa__cors": "^3.3.0",
     "@types/koa__router": "^12.0.0",
+    "@types/koa-basic-auth": "^2.0.4",
     "@types/koa-static": "^4.0.2",
     "@types/node": "^18.11.18",
-    "eslint-plugin-simple-import-sort": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "pino-pretty": "^9.1.1",
     "prettier": "^2.8.3",
@@ -60,15 +61,18 @@
     "@koa/router": "^12.0.0",
     "@leafac/sqlite": "^4.0.0",
     "bootstrap": "^5.2.3",
-    "config": "^3.3.8",
+    "bootstrap-icons": "^1.10.3",
+    "config": "^3.3.9",
     "htm": "^3.1.1",
     "koa": "^2.14.1",
+    "koa-basic-auth": "^4.0.0",
     "koa-static": "^5.0.0",
     "pino": "^8.8.0",
     "preact": "^10.11.3",
-    "react-inspector": "^6.0.1"
+    "react-inspector": "^6.0.1",
+    "serialize-error": "^11.0.0"
   },
   "engines": {
-    "node": "18.13.*"
+    "node": "18.*.*"
   }
 }

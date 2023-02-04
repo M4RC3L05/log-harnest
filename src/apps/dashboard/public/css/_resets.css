@@ -26,14 +26,15 @@ html:focus-within {
   scroll-behavior: smooth;
 }
 
+html,
 body {
   background-color: #222;
   color: #fff;
-  max-width: 100vw;
-  max-height: 100vh;
-  text-rendering: optimizeSpeed;
+  width: 100vw;
   line-height: 1.5;
   font-family: sans-serif;
+  height: 100vh;
+  overflow: hidden;
 }
 
 a:not([class]) {
@@ -66,4 +67,10 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+#app {
+  position: relative;
+  overflow-y: scroll;
+  height: 100vh;
 }

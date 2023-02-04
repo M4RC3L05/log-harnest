@@ -2,8 +2,10 @@ import cors from "@koa/cors";
 import Router from "@koa/router";
 import sql from "@leafac/sqlite";
 import Koa from "koa";
+import basicAuth from "koa-basic-auth";
 
-import { db } from "#src/database/db.js";
+import { db } from "#src/database/index.js";
+import { logLevels } from "#src/resolvers/log-resolvers.js";
 import * as sqlUtils from "#src/utils/sql.js";
 
 export const app = () => {
@@ -20,7 +22,7 @@ export const app = () => {
   });
 
   router.get("/logs", (ctx) => {
-    let { from, to, name } = ctx.request.query;
+    let { from, to, name, message, level } = ctx.request.query;
 
     if (!from && !to) {
       ctx.throw(422, "Missing time range");
@@ -47,6 +49,11 @@ export const app = () => {
       ctx.throw(422, "Time range too long");
     }
 
+    if (level) {
+      // @ts-ignore
+      level = logLevels.labels[Number(level)];
+    }
+
     ctx.body = {
       data: db.all(sql`
         select *
@@ -54,12 +61,15 @@ export const app = () => {
         where
           $${sqlUtils.btw(sql`"timestamp"`, from, to)}
           $${name ? sql` and $${sqlUtils.eq(sql`"name"`, name)}` : sql``}
+          $${level ? sql` and $${sqlUtils.eq(sql`"level"`, level)}` : sql``}
+          $${message ? sql` and $${sqlUtils.lk(sql`lower("message")`, `%${message}%`)}` : sql``}
         order by "timestamp" desc, "rowId" desc
       `),
     };
   });
 
   koa.use(cors());
+  koa.use(basicAuth({ name: "foo", pass: "bar" }));
   koa.use(router.routes());
   koa.use(router.allowedMethods());
 

@@ -1,133 +1,30 @@
 /* eslint-disable n/file-extension-in-import */
+
 import { html } from "htm/preact";
 import { render } from "preact";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { chromeDark, ObjectInspector } from "react-inspector";
+import { serializeError } from "serialize-error";
 
-import * as logUtils from "./utils/log.js";
+import { useGetIndexedSources, useGetLogs } from "./hooks/mod.js";
+import { debounce } from "./utils/fn.js";
+import { levelColor, levelEmoji, levelIndexes } from "./utils/log.js";
 
 /**
- * @param { Object } args
- * @param { string } [args.name]
- * @param { Date } [args.from]
- * @param { Date } [args.to]
- * @param { AbortSignal } signal
+ * @param {{ data: Record<string, any> }} args
  */
-const getLogs = async ({ name, from, to }, signal) => {
-  const url = new URL("http://127.0.0.1:4321/api/logs");
-
-  if (name) url.searchParams.set("name", name);
-  if (from) url.searchParams.set("from", new Date(from).toISOString());
-  url.searchParams.set("to", to ? new Date(to).toISOString() : new Date().toISOString());
-
-  const { data: logs } = await fetch(url.toString(), { signal }).then((response) => response.json());
-
-  return logs;
+const LogInspector = ({ data }) => {
+  return html`
+    <${ObjectInspector} expandLevel=${0} theme=${{ ...chromeDark, BASE_BACKGROUND_COLOR: "#222" }} data=${data} />
+  `;
 };
 
 /**
- * @param { AbortSignal } signal
+ * @param {{ name: string, level: string, message: string, timestamp: Date, data: string }} args
  */
-const getIndexedSources = async (signal) => {
-  const url = new URL("http://127.0.0.1:4321/api/logs/names");
+const LogItem = ({ name, level, message, timestamp, data }) => {
+  const [collapsed, setCollapsed] = useState(true);
 
-  const { data: names } = await fetch(url.toString(), { signal }).then((response) => response.json());
-
-  return names;
-};
-
-/**
- * @param { Object } args
- * @param { string } [args.name]
- * @param { Date } [args.from]
- * @param { Date } [args.to]
- * @returns {{ data: Record<string, any>[] | undefined, error: Error | undefined, requesting: boolean }}
- */
-const useGetLogs = ({ name, from, to } = {}) => {
-  const [data, setData] = useState(undefined);
-  const [requesting, setRequesting] = useState(true);
-  const [error, setError] = useState(undefined);
-  const abortCtrl = useRef(new AbortController());
-
-  useEffect(() => {
-    if (!abortCtrl.current) {
-      abortCtrl.current = new AbortController();
-    }
-
-    setData(undefined);
-    setError(undefined);
-    setRequesting(true);
-
-    getLogs({ name, from, to }, abortCtrl.current.signal)
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setRequesting(false);
-      });
-
-    return () => {
-      if (abortCtrl.current) {
-        abortCtrl.current.abort();
-      }
-
-      // @ts-ignore
-      abortCtrl.current = undefined;
-    };
-  }, [name, from, to]);
-
-  return { data, error, requesting };
-};
-
-/**
- * @returns {{ data: Record<string, string>[] | undefined, error: Error | undefined, requesting: boolean }}
- */
-const useGetIndexedSources = () => {
-  const [data, setData] = useState(undefined);
-  const [requesting, setRequesting] = useState(true);
-  const [error, setError] = useState(undefined);
-  const abortCtrl = useRef(new AbortController());
-
-  useEffect(() => {
-    if (!abortCtrl.current) {
-      abortCtrl.current = new AbortController();
-    }
-
-    setData(undefined);
-    setError(undefined);
-    setRequesting(true);
-
-    getIndexedSources(abortCtrl.current.signal)
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setRequesting(false);
-      });
-
-    return () => {
-      if (abortCtrl.current) {
-        abortCtrl.current.abort();
-      }
-
-      // @ts-ignore
-      abortCtrl.current = undefined;
-    };
-  }, []);
-
-  return { data, error, requesting };
-};
-
-/**
- * @param {{ name: string, level: string, timestamp: Date, data: string }} args
- */
-const LogItem = ({ name, level, timestamp, data }) => {
   return html`
     <div style=${{ paddingTop: "5px", paddingBottom: "5px" }}>
       <div
@@ -137,30 +34,54 @@ const LogItem = ({ name, level, timestamp, data }) => {
           fontSize: "12px",
           overflow: "hidden",
           display: "flex",
+          whiteSpace: "nowrap",
+          cursor: "pointer",
         }}
+        onClick=${() => setCollapsed((value) => !value)}
       >
-        <div style=${{ color: logUtils.levelColor(level), marginRight: "10px", width: "55px" }}>
-          ${logUtils.levelEmoji(level)} ${level}
+        <div style=${{ marginRight: "5px" }}>${collapsed ? "▸" : "▾"}</div>
+        <div style=${{ color: levelColor(level), marginRight: "10px", width: "55px" }}>
+          ${levelEmoji(level)} ${level}
         </div>
-        <div style=${{ marginRight: "15px", width: "132px" }}>${new Date(timestamp).toLocaleString()}</div>
+        <div style=${{ marginRight: "15px" }}>${new Date(timestamp).toLocaleString()}</div>
         <div style=${{ marginRight: "15px" }}>${name}</div>
-        <div style=${{ flex: 1, display: "flex", alignItems: "center" }}>
-          <${ObjectInspector}
-            expandLevel=${0}
-            theme=${{ ...chromeDark, BASE_BACKGROUND_COLOR: "#222" }}
-            data=${JSON.parse(data)}
-          />
+        <div
+          style=${{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          ${message}
         </div>
+      </div>
+      <div style=${{ wordWrap: "anywhere" }}>
+        ${collapsed ? undefined : html`<${LogInspector} data=${JSON.parse(data)} />`}
       </div>
     </div>
   `;
 };
 
 /**
- * @param {{name: string, from: Date, to: Date}} args
+ * @param { Object } args
+ * @param { string } args.name
+ * @param { Date } args.from
+ * @param { Date } args.to
+ * @param { string } args.message
+ * @param { string } args.level
+ * @param { boolean } args.refreshLogs
+ * @param { (arg: boolean) => void } args.setRefreshLogs
  */
-const Logs = ({ name, from, to }) => {
-  const { data, error, requesting } = useGetLogs({ name, from, to });
+const Logs = ({ name, from, to, message, level, refreshLogs, setRefreshLogs }) => {
+  const { data, error, requesting, refetch, cancel } = useGetLogs({ name, from, to, message, level });
+
+  useEffect(() => {
+    if (refreshLogs) {
+      setRefreshLogs(false);
+      cancel();
+      refetch();
+    }
+  }, [refreshLogs]);
 
   if (requesting) {
     return html`
@@ -174,16 +95,12 @@ const Logs = ({ name, from, to }) => {
     return html`
       <div>
         <p>Error requesting logs</p>
-        <pre>${JSON.stringify(error, null, 2)}</pre>
+        <pre>${JSON.stringify(serializeError(error), undefined, 2)}</pre>
       </div>
     `;
   }
 
-  if (!Array.isArray(data)) {
-    throw new TypeError("Data is in a invalid shape", { cause: data });
-  }
-
-  if (data.length <= 0) {
+  if (!Array.isArray(data) || data.length <= 0) {
     return html`
       <div>
         <p>No logs to show</p>
@@ -192,7 +109,7 @@ const Logs = ({ name, from, to }) => {
   }
 
   return html`
-    <div style=${{ wordWrap: "anywhere" }}>
+    <div>
       ${data.map(
         (/** @type {any} */ log, /** @type {number} */ index) =>
           html`
@@ -206,35 +123,73 @@ const Logs = ({ name, from, to }) => {
 };
 
 /**
- * @param {{ setName: (arg: any) => void, setFrom: (arg: any) => void, setTo: (arg: any) => void }} args
+ * @param { Object } args
+ * @param { (arg: string) => void } args.setName
+ * @param { (arg: Date) => void } args.setFrom
+ * @param { (arg: Date) => void } args.setTo
+ * @param { (arg: string) => void } args.setMessage
+ * @param { (arg: string) => void } args.setLevel
+ * @param { (arg: boolean) => boolean } args.setRefreshLogs
  */
-const LogFilters = ({ setName, setFrom, setTo }) => {
+const LogFilters = ({ setName, setFrom, setTo, setMessage, setLevel, setRefreshLogs }) => {
   const { data, requesting } = useGetIndexedSources();
+  const debouncedSetMessage = useMemo(() => debounce(setMessage, 250), [setMessage]);
 
   return html`
-    <div style=${{ display: "flex", justifyContent: "center" }}>
-      <select
-        disabled=${requesting}
-        onInput=${(/** @type {{ target: { value: any; }; }} */ event) => setName(event.target.value)}
-      >
-        <option name=""></option>
-        ${Array.isArray(data) && data.length > 0
-          ? data.map(({ name }) => html`<option value=${name}>${name}</option>`)
-          : html``}
-      </select>
-      <div style=${{ display: "flex", flexDirection: "column" }}>
+    <div class="row g-3 pt-5 pb-5 text-center">
+      <div class="col-12">
+        <input
+          type="text"
+          class="form-control form-select-sm"
+          placeholder="Search message.."
+          onInput=${(/** @type {{ target: { value: any; }; }} */ event) => debouncedSetMessage(event.target.value)}
+        />
+      </div>
+      <div class="col">
+        <select
+          class="form-select form-select-sm"
+          disabled=${requesting}
+          onInput=${(/** @type {{ target: { value: any; }; }} */ event) => setName(event.target.value)}
+        >
+          <option value="" disabled selected hidden>Name</option>
+          <option value="">-</option>
+          ${Array.isArray(data) && data.length > 0
+            ? data.map(({ name }) => html`<option value=${name}>${name}</option>`)
+            : undefined}
+        </select>
+      </div>
+      <div class="col">
+        <select
+          class="form-select form-select-sm"
+          onInput=${(/** @type {{ target: { value: any; }; }} */ event) => setLevel(event.target.value)}
+        >
+          <option value="" disabled selected hidden>Level</option>
+          <option value="">-</option>
+          ${Object.entries(levelIndexes).map(([key, value]) => html`<option value=${key}>${value}</option>`)}
+        </select>
+      </div>
+      <div class="col">
         <input
           type="datetime-local"
+          class="form-control form-control-sm"
           onChange=${(/** @type {{ target: { value: string; }; }} */ event) =>
             // @ts-ignore
             setFrom(event.target.value && event.target.value.length > 0 ? new Date(event.target.value) : undefined)}
         />
+      </div>
+      <div class="col">
         <input
           type="datetime-local"
+          class="form-control form-control-sm"
           onChange=${(/** @type {{ target: { value: string; }; }} */ event) =>
             // @ts-ignore
             setTo(event.target.value && event.target.value.length > 0 ? new Date(event.target.value) : undefined)}
         />
+      </div>
+      <div class="col d-grid">
+        <button class="btn btn-primary btn-sm" onClick=${() => setRefreshLogs(true)}>
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
       </div>
     </div>
   `;
@@ -242,20 +197,73 @@ const LogFilters = ({ setName, setFrom, setTo }) => {
 
 const App = () => {
   const [name, setName] = useState(undefined);
+  const [level, setLevel] = useState(undefined);
+  const [message, setMessage] = useState(undefined);
   const [from, setFrom] = useState(undefined);
   const [to, setTo] = useState(undefined);
+  const [refreshLogs, setRefreshLogs] = useState(false);
+  const [hasScroll, setHasScroll] = useState(false);
+  const appRef = useRef(globalThis.document.querySelector("#app"));
+
+  const checkAppScroll = useCallback(() => {
+    if (!appRef.current) {
+      setHasScroll(false);
+
+      return;
+    }
+
+    if (appRef.current.scrollTop > 10) {
+      setHasScroll(true);
+    } else {
+      setHasScroll(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (appRef.current) {
+      checkAppScroll();
+
+      appRef.current.addEventListener("scroll", checkAppScroll);
+
+      return () => {
+        appRef.current?.removeEventListener("scroll", checkAppScroll);
+      };
+    }
+  }, []);
 
   return html`
     <div class="container-fluid">
-      <div class="row">
+      <div
+        class="row position-fixed top-0 end-0 start-0"
+        style=${{
+          background: "#222",
+          boxShadow: hasScroll ? "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)" : undefined,
+          transition: "box-shadow .3s ease-in-out",
+        }}
+      >
         <div class="col-lg-10 offset-lg-1">
-          <${LogFilters} setName=${setName} setFrom=${setFrom} setTo=${setTo} />
+          <${LogFilters}
+            setName=${setName}
+            setFrom=${setFrom}
+            setTo=${setTo}
+            setMessage=${setMessage}
+            setLevel=${setLevel}
+            setRefreshLogs=${setRefreshLogs}
+          />
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" style=${{ marginTop: "184px", fontFamily: "monospace", fontSize: ".8em" }}>
         <div class="col-lg-10 offset-lg-1 mb-4">
-          <${Logs} name=${name} from=${from} to=${to} />
+          <${Logs}
+            name=${name}
+            from=${from}
+            to=${to}
+            message=${message}
+            level=${level}
+            refreshLogs=${refreshLogs}
+            setRefreshLogs=${setRefreshLogs}
+          />
         </div>
       </div>
     </div>

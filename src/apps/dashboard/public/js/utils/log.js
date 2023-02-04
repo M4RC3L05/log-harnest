@@ -1,11 +1,23 @@
 export const logLevels = {
   ALL: "all",
+  TRACE: "trace",
   DEBUG: "debug",
   INFO: "info",
   WARN: "warn",
   ERROR: "error",
   FATAL: "fatal",
   OFF: "off",
+};
+
+export const levelIndexes = {
+  0: logLevels.ALL,
+  10: logLevels.TRACE,
+  20: logLevels.DEBUG,
+  30: logLevels.INFO,
+  40: logLevels.WARN,
+  50: logLevels.ERROR,
+  60: logLevels.FATAL,
+  70: logLevels.OFF,
 };
 
 /**

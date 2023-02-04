@@ -50,7 +50,6 @@ export const resolveLevel = (log, maps, def) => {
  * @param { Record<string, string> } maps
  * @param { string } def
  */
-
 export const resolveName = (log, maps, def) => {
   return log?.[maps?.name] ?? def;
 };
@@ -60,9 +59,17 @@ export const resolveName = (log, maps, def) => {
  * @param { Record<string, string> } maps
  * @param { string } def
  */
-
 export const resolveTimestamp = (log, maps, def) => {
   return Number.isNaN(new Date(log?.[maps?.timestamp]).getTime())
     ? def
     : new Date(log?.[maps?.timestamp]).toISOString();
+};
+
+/**
+ * @param { Record<string, any> } log
+ * @param { Record<string, string> } maps
+ * @param { string } def
+ */
+export const resolveMessage = (log, maps, def) => {
+  return log?.[maps?.message] ?? def;
 };
