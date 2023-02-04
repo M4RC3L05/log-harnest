@@ -14,7 +14,24 @@ export const useRequest = (requestFn, args) => {
   const [error, setError] = useState(undefined);
   const abortCtrl = useRef(new AbortController());
 
-  const refetch = useCallback(() => request(), []);
+  const request = useCallback(async () => {
+    if (!abortCtrl.current) {
+      abortCtrl.current = new AbortController();
+    }
+
+    return requestFn(abortCtrl.current.signal, args)
+      .then((data) => setData(data))
+      .catch((error) => {
+        // Ignore abort signal error
+        if (error instanceof DOMException) {
+          return;
+        }
+
+        setError(error);
+      })
+      .finally(() => setRequesting(false));
+  }, [requestFn, JSON.stringify(args)]);
+  const refetch = useCallback(() => request(), [request]);
   const cancel = useCallback(() => {
     if (abortCtrl.current) {
       abortCtrl.current.abort();
@@ -23,27 +40,6 @@ export const useRequest = (requestFn, args) => {
     // @ts-ignore
     abortCtrl.current = undefined;
   }, []);
-
-  const request = async () => {
-    if (!abortCtrl.current) {
-      abortCtrl.current = new AbortController();
-    }
-
-    return requestFn(abortCtrl.current.signal, args)
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        if (error instanceof DOMException) {
-          return;
-        }
-
-        setError(error);
-      })
-      .finally(() => {
-        setRequesting(false);
-      });
-  };
 
   useEffect(() => {
     setData(undefined);
