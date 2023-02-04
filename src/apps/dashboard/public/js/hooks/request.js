@@ -37,7 +37,6 @@ export const useRequest = (requestFn, args) => {
       abortCtrl.current.abort();
     }
 
-    // @ts-ignore
     abortCtrl.current = undefined;
   }, []);
 
