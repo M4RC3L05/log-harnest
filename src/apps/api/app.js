@@ -1,12 +1,15 @@
 import cors from "@koa/cors";
 import Router from "@koa/router";
 import sql from "@leafac/sqlite";
+import config from "config";
 import Koa from "koa";
 import basicAuth from "koa-basic-auth";
 
 import { db } from "#src/database/index.js";
 import { logLevels } from "#src/resolvers/log-resolvers.js";
 import * as sqlUtils from "#src/utils/sql.js";
+
+const { username, password } = config.get("apps.api.basicAuth");
 
 export const app = () => {
   const koa = new Koa();
@@ -69,7 +72,7 @@ export const app = () => {
   });
 
   koa.use(cors());
-  koa.use(basicAuth({ name: "foo", pass: "bar" }));
+  koa.use(basicAuth({ name: username, pass: password }));
   koa.use(router.routes());
   koa.use(router.allowedMethods());
 

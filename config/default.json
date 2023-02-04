@@ -2,11 +2,19 @@
   "apps": {
     "api": {
       "host": "127.0.0.1",
-      "port": 4321
+      "port": 4321,
+      "basicAuth": {
+        "username": "foo",
+        "password": "bar"
+      }
     },
     "dashboard": {
       "host": "127.0.0.1",
-      "port": 4322
+      "port": 4322,
+      "basicAuth": {
+        "username": "foo",
+        "password": "bar"
+      }
     }
   },
   "database": {
