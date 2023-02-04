@@ -5,7 +5,7 @@ import config from "config";
 import Koa from "koa";
 import basicAuth from "koa-basic-auth";
 
-import { db } from "#src/database/index.js";
+import { db } from "#src/database/db.js";
 import { logLevels } from "#src/resolvers/log-resolvers.js";
 import * as sqlUtils from "#src/utils/sql.js";
 
