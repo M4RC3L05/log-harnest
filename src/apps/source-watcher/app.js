@@ -187,7 +187,7 @@ export const app = () => {
     };
   });
 
-  const close = async () => {
+  const close = () => {
     for (const { tail } of tails) tail.kill();
 
     for (const { aggregateAbortController, flush } of tailAgregators) {

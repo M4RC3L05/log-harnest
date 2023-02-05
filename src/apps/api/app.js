@@ -15,9 +15,9 @@ export const app = () => {
 
   controller(router);
 
+  koa.use(errorMapperMiddleware);
   koa.use(cors());
   koa.use(basicAuth({ name: username, pass: password }));
-  koa.use(errorMapperMiddleware);
   koa.use(router.routes());
   koa.use(router.allowedMethods());
 

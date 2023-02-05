@@ -16,6 +16,15 @@ export const /** @type { import("koa").Middleware } */ errorMapperMiddleware = a
         return;
       }
 
+      if (error instanceof Error && error?.name === "UnauthorizedError") {
+        for (const [key, value] of Object.entries(error.headers)) ctx.set(key, value);
+
+        ctx.status = error.status;
+        ctx.body = { error: { message: error.message, code: error.name.toLowerCase(), status: error.status } };
+
+        return;
+      }
+
       ctx.status = 500;
       ctx.body = { error: { message: "Internal server error", status: 500, code: "internal-server-error" } };
     }
