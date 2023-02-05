@@ -4,7 +4,7 @@ import { setTimeout } from "node:timers/promises";
 import sql from "@leafac/sqlite";
 import config from "config";
 
-import { db } from "#src/database/index.js";
+import { db } from "#src/database/db.js";
 import { logger } from "#src/logger/logger.js";
 import * as logResolvers from "#src/resolvers/log-resolvers.js";
 import * as abortControllerUtils from "#src/utils/abort-controller.js";
