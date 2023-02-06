@@ -3,7 +3,6 @@ import { setTimeout } from "node:timers/promises";
 import * as abortControllerUtils from "#src/utils/abort-controller.js";
 import * as logResolvers from "#src/core/resolvers/log-resolvers.js";
 import { LogAggregator } from "./log-aggregator.js";
-import { destinations } from "./mod.js";
 import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("json-log-aggregator");
@@ -82,7 +81,7 @@ export class JsonLogAggregator extends LogAggregator {
         .split("\n")
         .map((rawLine) => rawLine.toString("utf8").trim())
         .filter((rawLine) => rawLine.length > 0)
-        .map((rawLine) => destinations.makeLog(this.source.name, rawLine, this.source.maps)),
+        .map((rawLine) => this.destination.makeLog(this.source.name, rawLine, this.source.maps)),
     );
   }
 
