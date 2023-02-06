@@ -2,16 +2,31 @@
   "name": "log-harnest",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "type": "module",
   "imports": {
     "#src/*": "./src/*"
   },
+  "main": "index.js",
+  "scripts": {
+    "lint": "xo",
+    "lint-staged": "lint-staged",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
+  },
+  "lint-staged": {
+    "*.js": "xo",
+    "package.json": "sort-package-json && git add"
+  },
   "xo": {
-    "prettier": true,
+    "ignorePatterns": [
+      "node_modules"
+    ],
     "plugins": [
       "unused-imports"
     ],
+    "prettier": true,
     "rules": {
       "sort-imports": [
         "error",
@@ -45,43 +60,21 @@
           ]
         }
       ]
-    },
-    "ignorePatterns": [
-      "node_modules"
-    ]
+    }
   },
   "prettier": {
-    "editorconfig": true,
     "arrowParens": "always",
     "bracketSpacing": true,
+    "editorconfig": true,
     "endOfLine": "lf",
     "printWidth": 120,
     "proseWrap": "preserve",
     "quoteProps": "consistent",
     "semi": true,
-    "tabWidth": 2,
-    "useTabs": false,
     "singleQuote": false,
-    "trailingComma": "all"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/config": "^3.3.0",
-    "@types/koa": "^2.13.5",
-    "@types/koa__cors": "^3.3.0",
-    "@types/koa__router": "^12.0.0",
-    "@types/koa-basic-auth": "^2.0.4",
-    "@types/koa-static": "^4.0.2",
-    "@types/node": "^18.11.19",
-    "eslint-plugin-unused-imports": "^2.0.0",
-    "pino-pretty": "^9.1.1",
-    "prettier": "^2.8.3",
-    "xo": "^0.53.1"
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
   },
   "dependencies": {
     "@koa/cors": "^4.0.0",
@@ -98,6 +91,22 @@
     "preact": "^10.12.0",
     "react-inspector": "^6.0.1",
     "serialize-error": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/koa": "^2.13.5",
+    "@types/koa-basic-auth": "^2.0.4",
+    "@types/koa-static": "^4.0.2",
+    "@types/koa__cors": "^3.3.0",
+    "@types/koa__router": "^12.0.0",
+    "@types/node": "^18.11.19",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "pino-pretty": "^9.1.1",
+    "prettier": "^2.8.3",
+    "sort-package-json": "^2.4.1",
+    "xo": "^0.53.1"
   },
   "engines": {
     "node": "18.*.*"
