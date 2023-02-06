@@ -1,18 +1,15 @@
 /* eslint-disable n/file-extension-in-import */
 
+import { ObjectInspector, chromeDark } from "react-inspector";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { html } from "htm/preact";
 import { render } from "preact";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
-import { chromeDark, ObjectInspector } from "react-inspector";
 import { serializeError } from "serialize-error";
 
+import { levelColor, levelEmoji, levelIndexes } from "./utils/log.js";
 import { useGetIndexedSources, useGetLogs } from "./hooks/mod.js";
 import { debounce } from "./utils/fn.js";
-import { levelColor, levelEmoji, levelIndexes } from "./utils/log.js";
 
-/**
- * @param {{ data: Record<string, any> }} args
- */
 const LogInspector = ({ data }) => {
   return html`
     <${ObjectInspector}
@@ -23,9 +20,6 @@ const LogInspector = ({ data }) => {
   `;
 };
 
-/**
- * @param {{ name: string, level: string, message: string, timestamp: Date, data: string }} args
- */
 const LogItem = ({ name, level, message, timestamp, data }) => {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -66,16 +60,6 @@ const LogItem = ({ name, level, message, timestamp, data }) => {
   `;
 };
 
-/**
- * @param { Object } args
- * @param { string } args.name
- * @param { Date } args.from
- * @param { Date } args.to
- * @param { string } args.message
- * @param { string } args.level
- * @param { boolean } args.refreshLogs
- * @param { (arg: boolean) => void } args.setRefreshLogs
- */
 const Logs = ({ name, from, to, message, level, refreshLogs, setRefreshLogs }) => {
   const { data, error, requesting, refetch, cancel } = useGetLogs({ name, from, to, message, level });
 
@@ -115,9 +99,10 @@ const Logs = ({ name, from, to, message, level, refreshLogs, setRefreshLogs }) =
   return html`
     <div>
       ${data.map(
-        (/** @type {any} */ log, /** @type {number} */ index) =>
+        (log, index) =>
           html`
             <div
+              key=${`${log.level}||${log.name}||${log.timestamp}||${log.data}`}
               style=${{
                 borderBottom: index === data.length - 1 ? undefined : "1px solid var(--bs-border-color-translucent)",
               }}

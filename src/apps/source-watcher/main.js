@@ -1,5 +1,5 @@
-import { app } from "#src/apps/source-watcher/app.js";
 import { addHook } from "#src/utils/process.js";
+import { app } from "#src/apps/source-watcher/app.js";
 
 const watcher = app();
 

@@ -1,8 +1,8 @@
 import sql, { Database } from "@leafac/sqlite";
 import config from "config";
 
-import { logger } from "#src/logger/logger.js";
 import { addHook } from "#src/utils/process.js";
+import { logger } from "#src/logger/logger.js";
 
 const log = logger("database");
 

@@ -1,11 +1,7 @@
-/**
- * @param { Function } fn
- * @param { number } ms
- */
 export const debounce = (fn, ms) => {
-  let /** @type { any } */ timeout;
+  let timeout;
 
-  return (/** @type {any[]} */ ...args) => {
+  return (...args) => {
     if (timeout) {
       clearTimeout(timeout);
     }

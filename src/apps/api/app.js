@@ -1,8 +1,8 @@
-import cors from "@koa/cors";
-import Router from "@koa/router";
-import config from "config";
 import Koa from "koa";
+import Router from "@koa/router";
 import basicAuth from "koa-basic-auth";
+import config from "config";
+import cors from "@koa/cors";
 
 import controller from "#src/apps/api/controllers/mod.js";
 import { errorMapperMiddleware } from "#src/middlewares/error-mapper.js";

@@ -20,9 +20,6 @@ export const levelIndexes = {
   70: logLevels.OFF,
 };
 
-/**
- * @param { string } level
- */
 export const levelColor = (level) => {
   switch (level) {
     case logLevels.ALL: {
@@ -59,9 +56,6 @@ export const levelColor = (level) => {
   }
 };
 
-/**
- * @param { string } level
- */
 export const levelEmoji = (level) => {
   switch (level) {
     case logLevels.ALL: {

@@ -1,15 +1,6 @@
 import config from "../config.js";
 import { requester } from "../utils/request.js";
 
-/**
- * @param { AbortSignal } signal
- * @param { Object } args
- * @param { string } [args.name]
- * @param { Date } [args.from]
- * @param { Date } [args.to]
- * @param { string } [args.level]
- * @param { string } [args.message]
- */
 export const getLogs = async (signal, { name, from, to, message, level }) => {
   const url = new URL(`${config.api.url}/api/logs`);
 
@@ -23,9 +14,6 @@ export const getLogs = async (signal, { name, from, to, message, level }) => {
   return logs;
 };
 
-/**
- * @param { AbortSignal } signal
- */
 export const getIndexedSources = async (signal) => {
   const url = new URL(`${config.api.url}/api/logs/names`);
 

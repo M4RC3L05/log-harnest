@@ -1,9 +1,5 @@
 import config from "../config.js";
 
-/**
- * @param {string} url
- * @param {RequestInit | undefined} options
- */
 export const requester = (url, options = {}) => {
   return fetch(url, {
     ...options,

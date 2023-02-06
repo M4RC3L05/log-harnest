@@ -1,31 +1,31 @@
-import { GetLogsMissingTimeRangeError, GetLogsTimeRangeToLargeError } from "#src/handlers/log/get-logs.js";
+import { GetLogsMissingTimeRangeError, GetLogsTimeRangeToLargeError } from "#src/methods/log/get-logs.js";
 import { logger } from "#src/logger/logger.js";
 
 const log = logger("error-mapper-middleware");
 
-export const /** @type { import("koa").Middleware } */ errorMapperMiddleware = async (ctx, next) => {
-    try {
-      await next();
-    } catch (error) {
-      log.error(typeof error === "object" ? error : { error }, "Error caugth");
+export const errorMapperMiddleware = async (ctx, next) => {
+  try {
+    await next();
+  } catch (error) {
+    log.error(typeof error === "object" ? error : { error }, "Error caugth");
 
-      if (error instanceof GetLogsMissingTimeRangeError || error instanceof GetLogsTimeRangeToLargeError) {
-        ctx.status = 422;
-        ctx.body = { error: { message: error.message, code: error.code, status: 422 } };
+    if (error instanceof GetLogsMissingTimeRangeError || error instanceof GetLogsTimeRangeToLargeError) {
+      ctx.status = 422;
+      ctx.body = { error: { message: error.message, code: error.code, status: 422 } };
 
-        return;
-      }
-
-      if (error instanceof Error && error?.name === "UnauthorizedError") {
-        for (const [key, value] of Object.entries(error.headers)) ctx.set(key, value);
-
-        ctx.status = error.status;
-        ctx.body = { error: { message: error.message, code: error.name.toLowerCase(), status: error.status } };
-
-        return;
-      }
-
-      ctx.status = 500;
-      ctx.body = { error: { message: "Internal server error", status: 500, code: "internal-server-error" } };
+      return;
     }
-  };
+
+    if (error instanceof Error && error?.name === "UnauthorizedError") {
+      for (const [key, value] of Object.entries(error.headers)) ctx.set(key, value);
+
+      ctx.status = error.status;
+      ctx.body = { error: { message: error.message, code: error.name.toLowerCase(), status: error.status } };
+
+      return;
+    }
+
+    ctx.status = 500;
+    ctx.body = { error: { message: "Internal server error", status: 500, code: "internal-server-error" } };
+  }
+};
