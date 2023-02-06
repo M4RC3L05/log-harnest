@@ -1,7 +1,7 @@
 import sql from "@leafac/sqlite";
 
 import { LogAggregatorDestination } from "./log-aggregator-destination.js";
-import { db } from "#src/database/db.js";
+import { db } from "#src/core/database/db.js";
 import { join } from "#src/utils/sql.js";
 
 export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {

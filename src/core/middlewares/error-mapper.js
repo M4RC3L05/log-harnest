@@ -1,5 +1,5 @@
 import { GetLogsMissingTimeRangeError, GetLogsTimeRangeToLargeError } from "#src/methods/log/get-logs.js";
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("error-mapper-middleware");
 

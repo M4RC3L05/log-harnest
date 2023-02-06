@@ -1,8 +1,8 @@
 import sql from "@leafac/sqlite";
 
 import { btw, eq, lk } from "#src/utils/sql.js";
-import { db } from "#src/database/db.js";
-import { resolveLogName } from "#src/resolvers/log-resolvers.js";
+import { db } from "#src/core/database/db.js";
+import { resolveLogName } from "#src/core/resolvers/log-resolvers.js";
 
 export class GetLogsMissingTimeRangeError extends Error {
   constructor(message) {

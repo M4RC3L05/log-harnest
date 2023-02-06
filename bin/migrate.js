@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 import { run } from "#src/commands/migrate.js";
 
 const log = logger("migrate-command");

@@ -2,7 +2,7 @@ import config from "config";
 
 import { addHook } from "#src/utils/process.js";
 import { app } from "#src/apps/api/app.js";
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("api");
 const { host, port } = config.get("apps.api");

@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 
 import config from "config";
 
-import { db } from "#src/database/index.js";
+import { db } from "#src/database/db.js";
 
 export const run = async () => {
   try {

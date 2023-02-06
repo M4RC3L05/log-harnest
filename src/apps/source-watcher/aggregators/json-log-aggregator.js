@@ -1,10 +1,10 @@
 import { setTimeout } from "node:timers/promises";
 
 import * as abortControllerUtils from "#src/utils/abort-controller.js";
-import * as logResolvers from "#src/resolvers/log-resolvers.js";
+import * as logResolvers from "#src/core/resolvers/log-resolvers.js";
 import { LogAggregator } from "./log-aggregator.js";
-import { UnparsableLogError } from "#src/errors/mod.js";
-import { logger } from "#src/logger/logger.js";
+import { UnparsableLogError } from "#src/core/errors/mod.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("json-log-aggregator");
 

@@ -5,7 +5,7 @@ import {
   destinations as aggregatorDestinations,
   sources as aggregatorsSources,
 } from "#src/apps/source-watcher/aggregators/mod.js";
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("source-watcher");
 

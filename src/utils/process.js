@@ -1,6 +1,6 @@
 import process from "node:process";
 
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("process");
 const processHooks = [];

@@ -2,7 +2,7 @@ import sql, { Database } from "@leafac/sqlite";
 import config from "config";
 
 import { addHook } from "#src/utils/process.js";
-import { logger } from "#src/logger/logger.js";
+import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("database");
 
