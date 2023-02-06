@@ -1,6 +1,8 @@
-export class UnparsableLogError extends Error {
+import { BaseError } from "./base-error.js";
+
+export class UnparsableLogError extends BaseError {
   constructor(log, cause) {
-    super("Could not parse log line", { cause });
+    super("unparsable-log-error", "Could not parse log line", cause);
 
     this.log = log;
   }

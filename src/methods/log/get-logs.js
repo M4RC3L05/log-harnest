@@ -1,25 +1,13 @@
 import sql from "@leafac/sqlite";
 
+import { MissingTimeRangeError, TimeRangeToBigError } from "#src/core/errors/mod.js";
 import { btw, eq, lk } from "#src/utils/sql.js";
-import { db } from "#src/core/database/db.js";
+import { db } from "#src/database/db.js";
 import { resolveLogName } from "#src/core/resolvers/log-resolvers.js";
-
-export class GetLogsMissingTimeRangeError extends Error {
-  constructor(message) {
-    super(message);
-    this.code = "get-logs-missing-time-range-error";
-  }
-}
-export class GetLogsTimeRangeToLargeError extends Error {
-  constructor(message) {
-    super(message);
-    this.code = "get-logs-time-range-to-large-error";
-  }
-}
 
 export const getLogs = ({ from, to, name, message, level } = {}) => {
   if (!from && !to) {
-    throw new GetLogsMissingTimeRangeError("Missing `from` or `to`");
+    throw new MissingTimeRangeError("Missing `from` or `to`");
   }
 
   if (!from) {
@@ -39,8 +27,8 @@ export const getLogs = ({ from, to, name, message, level } = {}) => {
   const currentDistance = Math.abs(new Date(String(to)).getTime() - new Date(String(from)).getTime());
 
   if (currentDistance > maxDistance) {
-    throw new GetLogsTimeRangeToLargeError(
-      `\`from\` and \`to\` distance is to large, max distance is ${maxDistance}ms but ${currentDistance}ms given`,
+    throw new TimeRangeToBigError(
+      `\`from\` and \`to\` distance is to big, max distance is ${maxDistance}ms but ${currentDistance}ms given`,
     );
   }
 

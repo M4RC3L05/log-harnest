@@ -1,4 +1,4 @@
-import { GetLogsMissingTimeRangeError, GetLogsTimeRangeToLargeError } from "#src/methods/log/get-logs.js";
+import { MissingTimeRangeError, TimeRangeToBigError } from "#src/core/errors/mod.js";
 import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("error-mapper-middleware");
@@ -9,7 +9,7 @@ export const errorMapperMiddleware = async (ctx, next) => {
   } catch (error) {
     log.error(typeof error === "object" ? error : { error }, "Error caugth");
 
-    if (error instanceof GetLogsMissingTimeRangeError || error instanceof GetLogsTimeRangeToLargeError) {
+    if (error instanceof MissingTimeRangeError || error instanceof TimeRangeToBigError) {
       ctx.status = 422;
       ctx.body = { error: { message: error.message, code: error.code, status: 422 } };
 
