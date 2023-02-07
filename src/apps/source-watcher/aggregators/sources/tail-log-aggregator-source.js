@@ -6,9 +6,9 @@ export class TailLogAggregatorSource extends LogAggregatorSource {
   #tail;
 
   constructor(source) {
-    super(source);
+    super(source.name, source.maps);
 
-    this.#tail = childProcess.spawn("tail", ["-f", this.source, "-n", "0"]);
+    this.#tail = childProcess.spawn("tail", ["-f", source.source, "-n", "0"]);
   }
 
   onData(fn) {

@@ -1,6 +1,10 @@
 export class LogAggregatorSource {
-  constructor(source) {
-    Object.assign(this, source);
+  name;
+  maps;
+
+  constructor(name, maps) {
+    this.name = name;
+    this.maps = maps;
   }
 
   onData(_fn) {}

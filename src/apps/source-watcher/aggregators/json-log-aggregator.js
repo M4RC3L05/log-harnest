@@ -1,29 +1,10 @@
 import { setTimeout } from "node:timers/promises";
 
 import * as abortControllerUtils from "#src/utils/abort-controller.js";
-import * as logResolvers from "#src/core/resolvers/log-resolvers.js";
 import { LogAggregator } from "./log-aggregator.js";
 import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("json-log-aggregator");
-
-const parseLog = ({ name, maps, raw, timestamp }) => {
-  try {
-    const parsed = JSON.parse(raw);
-
-    return {
-      name: logResolvers.resolveName(parsed, maps, name),
-      level: logResolvers.resolveLevel(parsed, maps, "info"),
-      timestamp: logResolvers.resolveTimestamp(parsed, maps, timestamp),
-      message: logResolvers.resolveMessage(parsed, maps, parsed?.message ?? parsed?.msg ?? ""),
-      data: raw,
-    };
-  } catch (error) {
-    log.error(error, "Unable to parse log");
-
-    return false;
-  }
-};
 
 export class JsonLogAggregator extends LogAggregator {
   #buffer;
@@ -86,7 +67,7 @@ export class JsonLogAggregator extends LogAggregator {
   }
 
   async flush() {
-    await this.destination.write(this.#buffer.map((log) => parseLog(log)).filter((log) => log !== false));
+    await this.destination.write(this.#buffer);
     this.#buffer.length = 0;
   }
 
