@@ -1,3 +1,7 @@
+### v1.1.0 (2023-02-08)
+
+- [Add licence and package metadata](https://github.com/M4RC3L05/log-harnest/commit/0183dcbb9b024f0df13a0f37ea71e78eab07a240)
+
 ### v1.0.0 (2023-02-08)
 
 - [Add readme](https://github.com/M4RC3L05/log-harnest/commit/b114ce074c9c5453bb1c64b92c657144fd0d9ff0)
