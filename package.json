@@ -11,9 +11,14 @@
   },
   "main": "index.js",
   "scripts": {
+    "dev:api": "node --watch src/apps/api/main.js | pino-pretty",
+    "dev:dashboard": "node --watch src/apps/dashboard/main.js | pino-pretty",
+    "dev:source-watcher": "node --watch src/apps/source-watcher/main.js | pino-pretty",
+    "postinstall": "patch-package",
     "lint": "xo",
     "lint-staged": "lint-staged",
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
+    "version": "offline-github-changelog --next=${npm_new_version} | sed -e '/Release v.*/d;s/ (\\[.*\\]\\(.*\\))//gm' > CHANGELOG.md && git add CHANGELOG.md"
   },
   "lint-staged": {
     "*.js": "xo",
@@ -87,6 +92,7 @@
     "koa": "^2.14.1",
     "koa-basic-auth": "^4.0.0",
     "koa-static": "^5.0.0",
+    "patch-package": "^6.5.1",
     "pino": "^8.9.0",
     "preact": "^10.12.0",
     "react-inspector": "^6.0.1",
@@ -103,6 +109,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
+    "offline-github-changelog": "^3.0.1",
     "pino-pretty": "^9.1.1",
     "prettier": "^2.8.3",
     "sort-package-json": "^2.4.1",
