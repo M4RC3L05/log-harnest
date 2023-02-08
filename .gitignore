@@ -2,3 +2,4 @@ node_modules
 data/*
 config/local.json
 **/public/config.json
+.pm2/*.json
