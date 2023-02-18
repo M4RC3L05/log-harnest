@@ -82,6 +82,7 @@ export class JsonLogAggregator extends LogAggregator {
 
   async close() {
     await this.source.close();
+    await this.destination.close();
 
     this.#aggregatorAbortController.abort();
     this.flush();
