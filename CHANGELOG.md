@@ -1,3 +1,8 @@
+### v1.3.0 (2023-02-18)
+
+- [Make log aggregators more decopuled](https://github.com/M4RC3L05/log-harnest/commit/7967dac73c1057a7009a6db05082ddc0cdc4ee8c)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/202d5666fb91f633fb35b1c94cc1fc0f5fe67d98)
+
 ### v1.2.0 (2023-02-12)
 
 - [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/66ef497d69847c77b978c980a2a4102ca968f467)
