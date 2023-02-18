@@ -44,9 +44,7 @@ export const resolveName = (log, maps, def) => {
 };
 
 export const resolveTimestamp = (log, maps, def) => {
-  return Number.isNaN(new Date(log?.[maps?.timestamp]).getTime())
-    ? def
-    : new Date(log?.[maps?.timestamp]).toISOString();
+  return Number.isNaN(new Date(log?.[maps?.timestamp]).getTime()) ? def : new Date(log?.[maps?.timestamp]);
 };
 
 export const resolveMessage = (log, maps, def) => {

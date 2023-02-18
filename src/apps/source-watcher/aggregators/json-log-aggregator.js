@@ -6,6 +6,14 @@ import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("json-log-aggregator");
 
+const isJSON = (data) => {
+  try {
+    return typeof JSON.parse(data) === "object";
+  } catch {
+    return false;
+  }
+};
+
 export class JsonLogAggregator extends LogAggregator {
   #buffer;
   #timeoutFlushAbortController;
@@ -61,13 +69,14 @@ export class JsonLogAggregator extends LogAggregator {
         .toString("utf8")
         .split("\n")
         .map((rawLine) => rawLine.toString("utf8").trim())
-        .filter((rawLine) => rawLine.length > 0)
-        .map((rawLine) => this.destination.makeLog(this.source.name, rawLine, this.source.maps)),
+        .filter((rawLine) => rawLine.length > 0 && isJSON(rawLine))
+        .map((rawLine) => this.destination.makeLog(this.source.name, JSON.parse(rawLine), this.source.maps)),
     );
   }
 
   async flush() {
     await this.destination.write(this.#buffer);
+
     this.#buffer.length = 0;
   }
 

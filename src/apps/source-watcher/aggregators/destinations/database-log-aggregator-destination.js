@@ -4,27 +4,16 @@ import * as logResolvers from "#src/core/resolvers/log-resolvers.js";
 import { LogAggregatorDestination } from "./log-aggregator-destination.js";
 import { db } from "#src/database/db.js";
 import { join } from "#src/utils/sql.js";
-import { logger } from "#src/core/logger/logger.js";
-
-const log = logger("database-log-aggregator-destination");
 
 export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
   #logToDB({ name, maps, raw, timestamp }) {
-    try {
-      const parsed = JSON.parse(raw);
-
-      return {
-        name: logResolvers.resolveName(parsed, maps, name),
-        level: logResolvers.resolveLevel(parsed, maps, "info"),
-        timestamp: logResolvers.resolveTimestamp(parsed, maps, timestamp),
-        message: logResolvers.resolveMessage(parsed, maps, parsed?.message ?? parsed?.msg ?? ""),
-        data: raw,
-      };
-    } catch (error) {
-      log.error(error, "Unable to parse log");
-
-      return false;
-    }
+    return {
+      name: logResolvers.resolveName(raw, maps, name),
+      level: logResolvers.resolveLevel(raw, maps, "info"),
+      timestamp: logResolvers.resolveTimestamp(raw, maps, timestamp),
+      message: logResolvers.resolveMessage(raw, maps, raw?.message ?? raw?.msg ?? ""),
+      data: JSON.stringify(raw ?? {}),
+    };
   }
 
   async write(logs) {
@@ -33,8 +22,10 @@ export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
 
     const values = logs
       .map((log) => this.#logToDB(log))
-      .filter((log) => log !== false)
-      .map(({ name, level, message, timestamp, data }) => sql`(${name}, ${level}, ${message}, ${timestamp}, ${data})`);
+      .map(
+        ({ name, level, message, timestamp, data }) =>
+          sql`(${name}, ${level}, ${message}, ${timestamp.toISOString()}, ${data})`,
+      );
 
     if (values.length <= 0) {
       return;
