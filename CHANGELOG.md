@@ -1,3 +1,7 @@
+### v1.4.0 (2023-02-18)
+
+- [Add close method to log aggregator destination](https://github.com/M4RC3L05/log-harnest/commit/611e618caa224a4dbdbb850ebfc5072e0175ae88)
+
 ### v1.3.0 (2023-02-18)
 
 - [Make log aggregators more decopuled](https://github.com/M4RC3L05/log-harnest/commit/7967dac73c1057a7009a6db05082ddc0cdc4ee8c)
