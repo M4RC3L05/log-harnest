@@ -20,10 +20,6 @@
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "version": "offline-github-changelog --next=${npm_new_version} | sed -e '/Release v.*/d;s/ (\\[.*\\]\\(.*\\))//gm' > CHANGELOG.md && git add CHANGELOG.md"
   },
-  "lint-staged": {
-    "*.js": "xo",
-    "package.json": "sort-package-json && git add"
-  },
   "xo": {
     "ignorePatterns": [
       "node_modules"

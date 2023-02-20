@@ -7,7 +7,7 @@ import cors from "@koa/cors";
 import controller from "#src/apps/api/controllers/mod.js";
 import { errorMapperMiddleware } from "#src/core/middlewares/error-mapper.js";
 
-const { username, password } = config.get("apps.api.basicAuth");
+const { username, password } = config.get<{ username: string; password: string }>("apps.api.basicAuth");
 
 export const app = () => {
   const koa = new Koa();

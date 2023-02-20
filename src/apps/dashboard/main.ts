@@ -5,7 +5,7 @@ import { app } from "#src/apps/dashboard/app.js";
 import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("dashboard");
-const { host, port } = config.get("apps.dashboard");
+const { host, port } = config.get<{ host: string; port: number }>("apps.dashboard");
 
 const server = app().listen(port, host, () => {
   log.info({ host, port }, "Serving");

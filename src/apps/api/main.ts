@@ -5,7 +5,7 @@ import { app } from "#src/apps/api/app.js";
 import { logger } from "#src/core/logger/logger.js";
 
 const log = logger("api");
-const { host, port } = config.get("apps.api");
+const { host, port } = config.get<{ host: string; port: number }>("apps.api");
 
 const server = app().listen(port, host, () => {
   log.info({ host, port }, "Serving");

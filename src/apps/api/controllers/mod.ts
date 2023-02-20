@@ -1,9 +1,8 @@
-// eslint-disable-next-line unused-imports/no-unused-imports, no-unused-vars
-import Router from "@koa/router";
-
 import logController from "#src/apps/api/controllers/log-controller.js";
 
+import type Router from "@koa/router";
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (router) => {
+export default (router: Router) => {
   logController(router);
 };
