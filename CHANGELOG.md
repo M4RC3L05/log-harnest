@@ -1,3 +1,12 @@
+### v2.0.0 (2023-02-20)
+
+- [Reset data on every request](https://github.com/M4RC3L05/log-harnest/commit/e579462f00d9be470376bf7ee2338ec068ccc437)
+- [Fix type on sql helper function](https://github.com/M4RC3L05/log-harnest/commit/610022525311753137469a43b63d2ebf1179ffb8)
+- [Update pm2 example files to support ts](https://github.com/M4RC3L05/log-harnest/commit/7e0ed0b303b78cbf70a71f7797ea48e42e3f0acd)
+- [Fix lint](https://github.com/M4RC3L05/log-harnest/commit/7b42a335b89b3faa9f1fec2f7760b9879ac52fa1)
+- [Add ts](https://github.com/M4RC3L05/log-harnest/commit/e50d25b039c2bd34d9859a0d6f42ed87a7a34049)
+- [Update nodejs version](https://github.com/M4RC3L05/log-harnest/commit/aa5d311a50b27168512db523dc073c5f9cda42e1)
+
 ### v1.4.0 (2023-02-18)
 
 - [Add close method to log aggregator destination](https://github.com/M4RC3L05/log-harnest/commit/611e618caa224a4dbdbb850ebfc5072e0175ae88)
