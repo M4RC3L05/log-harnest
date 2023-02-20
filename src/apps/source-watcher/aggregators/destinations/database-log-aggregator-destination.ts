@@ -1,12 +1,12 @@
 import sql from "@leafac/sqlite";
 
 import * as logResolvers from "#src/core/resolvers/log-resolvers.js";
-import { LogAggregatorDestination } from "./log-aggregator-destination.js";
+import { type Log, LogAggregatorDestination } from "./log-aggregator-destination.js";
 import { db } from "#src/database/db.js";
 import { join } from "#src/utils/sql.js";
 
 export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
-  #logToDB({ name, maps, raw, timestamp }) {
+  #logToDb({ name, maps, raw, timestamp }: Log) {
     return {
       name: logResolvers.resolveName(raw, maps, name),
       level: logResolvers.resolveLevel(raw, maps, "info"),
@@ -16,12 +16,12 @@ export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
     };
   }
 
-  async write(logs) {
+  async write(logs: Log | Log[]) {
     if (!Array.isArray(logs)) logs = [logs];
     if (logs.length <= 0) return;
 
     const values = logs
-      .map((log) => this.#logToDB(log))
+      .map((log) => this.#logToDb(log))
       .map(
         ({ name, level, message, timestamp, data }) =>
           sql`(${name}, ${level}, ${message}, ${timestamp.toISOString()}, ${data})`,

@@ -1,4 +1,4 @@
-export const any = (...abortSignals) => {
+export const any = (...abortSignals: AbortSignal[]) => {
   const aggregatedAbortController = new AbortController();
 
   const onAbort = () => {

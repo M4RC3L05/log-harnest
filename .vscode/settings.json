@@ -3,9 +3,8 @@
   "xo.format.enable": true,
   "editor.formatOnSave": true,
   "typescript.preferences.importModuleSpecifierEnding": "js",
-  "javascript.preferences.importModuleSpecifierEnding": "js",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.suggest.autoImports": true,
   "[javascript]": {
     "editor.defaultFormatter": "samverschueren.linter-xo"
   },

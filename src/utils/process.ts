@@ -2,17 +2,22 @@ import process from "node:process";
 
 import { logger } from "#src/core/logger/logger.js";
 
+type Hook = {
+  name: string;
+  handler: () => Promise<void> | void;
+};
+
 const log = logger("process");
-const processHooks = [];
+const processHooks: Hook[] = [];
 const signalsToWatch = ["SIGTERM", "SIGINT", "SIGUSR2"];
 let shuttingDown = false;
 
-export const addHook = (hook) => {
+export const addHook = (hook: Hook) => {
   log.info(`Registered "${hook.name}" hook`);
   processHooks.push(hook);
 };
 
-const processSignal = async (signal) => {
+const processSignal = async (signal: NodeJS.Signals) => {
   if (shuttingDown) {
     log.warn("Ignoring process exit signal has the app is shutting down.");
     return;
@@ -32,7 +37,7 @@ const processSignal = async (signal) => {
       await handler();
 
       log.info(`"${name}" hook successfull`);
-    } catch (error) {
+    } catch (error: unknown) {
       log.error(error, `"${name}" hook unsuccessfully`);
     }
   }
@@ -40,7 +45,7 @@ const processSignal = async (signal) => {
   log.info({ signal }, "Exit signal process completed");
 };
 
-const processErrors = (error) => {
+const processErrors = (error: unknown) => {
   log.error(typeof error === "object" ? error : { error }, "Uncaught/Unhandled");
 
   if (shuttingDown) log.info("Ignoring Uncaught/Unhandled has the app is shutting down.");

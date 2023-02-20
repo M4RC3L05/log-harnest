@@ -5,7 +5,15 @@ import { btw, eq, lk } from "#src/utils/sql.js";
 import { db } from "#src/database/db.js";
 import { resolveLogName } from "#src/core/resolvers/log-resolvers.js";
 
-export const getLogs = ({ from, to, name, message, level } = {}) => {
+export type GetLogsArgs = {
+  from?: string;
+  to?: string;
+  name?: string;
+  message?: string;
+  level?: string;
+};
+
+export const getLogs = ({ from, to, name, message, level }: GetLogsArgs) => {
   if (!from && !to) {
     throw new MissingTimeRangeError("Missing `from` or `to`");
   }
@@ -33,7 +41,7 @@ export const getLogs = ({ from, to, name, message, level } = {}) => {
   }
 
   if (level) {
-    level = resolveLogName(Number(level));
+    level = resolveLogName(Number(level) as any) as string;
   }
 
   return db.all(sql`

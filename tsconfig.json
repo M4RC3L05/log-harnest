@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "baseUrl": ".",
+    "strict": true,
+    "paths": {
+      "#src/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+    "swc": false,
+    "transpileOnly": true
+  }
+}

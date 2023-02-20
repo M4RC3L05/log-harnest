@@ -1,7 +1,7 @@
 export class BaseError extends Error {
-  code;
+  code!: string;
 
-  constructor(code, message, cause) {
+  constructor(code: string, message: string, cause: unknown) {
     super(message, { cause });
 
     this.code = code;

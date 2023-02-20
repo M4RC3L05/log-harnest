@@ -3,7 +3,7 @@ import basicAuth from "koa-basic-auth";
 import config from "config";
 import koaStatic from "koa-static";
 
-const { username, password } = config.get("apps.dashboard.basicAuth");
+const { username, password } = config.get<{ username: string; password: string }>("apps.dashboard.basicAuth");
 
 export const app = () => {
   const koa = new Koa();

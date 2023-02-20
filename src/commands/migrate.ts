@@ -6,7 +6,7 @@ import { db } from "#src/database/db.js";
 
 export const run = async () => {
   try {
-    const migrationsDir = config.get("database.migrations.path");
+    const migrationsDir = config.get<string>("database.migrations.path");
     const dirFiles = await fs.readdir(migrationsDir, { withFileTypes: true });
     const migrationsFiles = dirFiles.filter((file) => file.isFile() && file.name.endsWith(".sql"));
     const migrations = await Promise.all(
