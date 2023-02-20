@@ -15,6 +15,10 @@ export const useRequest = (requestFn, args) => {
       abortCtrl.current = new AbortController();
     }
 
+    setRequesting(true);
+    setData(undefined);
+    setError(undefined);
+
     return requestFn(abortCtrl.current.signal, args)
       .then((data) => setData(data))
       .catch((error) => {
@@ -37,10 +41,6 @@ export const useRequest = (requestFn, args) => {
   }, []);
 
   useEffect(() => {
-    setData(undefined);
-    setError(undefined);
-    setRequesting(true);
-
     request();
 
     return () => {
