@@ -1,3 +1,7 @@
+### v2.0.1 (2023-02-22)
+
+- [Fix ui padding and scrolling bugs on mobile](https://github.com/M4RC3L05/log-harnest/commit/3e5f4c9a864caca5b979bb2e1ea1a139eb33e8ee)
+
 ### v2.0.0 (2023-02-20)
 
 - [Reset data on every request](https://github.com/M4RC3L05/log-harnest/commit/e579462f00d9be470376bf7ee2338ec068ccc437)
