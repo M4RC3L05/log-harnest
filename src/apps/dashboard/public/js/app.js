@@ -299,6 +299,7 @@ const App = () => {
       <div
         class="row position-fixed top-0 end-0 start-0"
         style=${{
+          zIndex: 1000,
           background: "var(--bs-body-bg)",
           boxShadow: hasScroll ? "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)" : undefined,
           transition: "box-shadow .3s ease-in-out",
