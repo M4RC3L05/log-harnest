@@ -1,3 +1,7 @@
+### v2.0.2 (2023-02-22)
+
+- [Fix zIndex top bar issues](https://github.com/M4RC3L05/log-harnest/commit/18317136d442758e84b65f26214335f948ae166d)
+
 ### v2.0.1 (2023-02-22)
 
 - [Fix ui padding and scrolling bugs on mobile](https://github.com/M4RC3L05/log-harnest/commit/3e5f4c9a864caca5b979bb2e1ea1a139eb33e8ee)
