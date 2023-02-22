@@ -24,13 +24,12 @@ const LogItem = ({ name, level, message, timestamp, data }) => {
   const [collapsed, setCollapsed] = useState(true);
 
   return html`
-    <div style=${{ paddingTop: "5px", paddingBottom: "5px" }}>
+    <div style=${{ paddingTop: "5px", paddingBottom: "5px", overflowX: "auto" }}>
       <div
         style=${{
           height: "auto",
           lineHeight: "20px",
           fontSize: "12px",
-          overflow: "hidden",
           display: "flex",
           whiteSpace: "nowrap",
           cursor: "pointer",
@@ -46,7 +45,6 @@ const LogItem = ({ name, level, message, timestamp, data }) => {
         <div
           style=${{
             whiteSpace: "nowrap",
-            overflow: "hidden",
             textOverflow: "ellipsis",
           }}
         >
@@ -147,7 +145,7 @@ const LogFilters = ({
           </button>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-md-6 col-sm-6 col-xs-6">
         <div class="input-group">
           <select
             defaultValue=${name}
@@ -166,7 +164,7 @@ const LogFilters = ({
           </button>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-md-6 col-sm-6 col-xs-6">
         <div class="input-group">
           <select
             class="form-select form-select-sm"
@@ -182,7 +180,7 @@ const LogFilters = ({
           </button>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-md-6 col-sm-6 col-xs-6">
         <div class="input-group">
           <input
             type="datetime-local"
@@ -198,7 +196,7 @@ const LogFilters = ({
           </button>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-md-6 col-sm-6 col-xs-6">
         <div class="input-group">
           <input
             type="datetime-local"
@@ -304,6 +302,8 @@ const App = () => {
           background: "var(--bs-body-bg)",
           boxShadow: hasScroll ? "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)" : undefined,
           transition: "box-shadow .3s ease-in-out",
+          paddingRight: "calc(var(--bs-gutter-x) * .5)",
+          paddingLeft: "calc(var(--bs-gutter-x) * .5)",
         }}
       >
         <div class="col-lg-10 offset-lg-1">
