@@ -17,6 +17,8 @@ export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
   }
 
   async write(logs: Log | Log[]) {
+    if (!db.open) return;
+
     if (!Array.isArray(logs)) logs = [logs];
     if (logs.length <= 0) return;
 
