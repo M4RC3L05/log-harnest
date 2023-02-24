@@ -1,3 +1,9 @@
+### v2.1.0 (2023-02-24)
+
+- [Add custom transporter](https://github.com/M4RC3L05/log-harnest/commit/57d2ae146ca8700c7b662547220cbb9f17ec334e)
+- [Update db debug log](https://github.com/M4RC3L05/log-harnest/commit/6069582d1005740916c57a99793f2cb46cf1ba76)
+- [Prevent from write to db if connection is closed](https://github.com/M4RC3L05/log-harnest/commit/4a1cd98be21a7a31b65c4629232f6692460e4db8)
+
 ### v2.0.2 (2023-02-22)
 
 - [Fix zIndex top bar issues](https://github.com/M4RC3L05/log-harnest/commit/18317136d442758e84b65f26214335f948ae166d)
