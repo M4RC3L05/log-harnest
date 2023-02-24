@@ -1,3 +1,8 @@
+### v2.1.1 (2023-02-24)
+
+- [Enable swc](https://github.com/M4RC3L05/log-harnest/commit/184a76139fdab9afa91f54096ba2194c867a6ebf)
+- [Fix multiple db clients on logger transport](https://github.com/M4RC3L05/log-harnest/commit/703387d61a9d0b0a750758aeea1e0b258b4a4870)
+
 ### v2.1.0 (2023-02-24)
 
 - [Add custom transporter](https://github.com/M4RC3L05/log-harnest/commit/57d2ae146ca8700c7b662547220cbb9f17ec334e)
