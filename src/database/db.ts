@@ -8,7 +8,7 @@ const log = logger("database");
 
 export const db = new Database(config.get("database.path"), {
   verbose(sql, ...args) {
-    log.debug(sql, ...args);
+    log.debug({ args }, sql);
   },
 })
   .execute(sql`pragma journal_mode = WAL`)
