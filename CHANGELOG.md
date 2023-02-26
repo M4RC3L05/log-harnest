@@ -1,3 +1,7 @@
+### v2.2.0 (2023-02-26)
+
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/39a031e1834062f01bc1db496c57f5dfe76ec20c)
+
 ### v2.1.1 (2023-02-24)
 
 - [Enable swc](https://github.com/M4RC3L05/log-harnest/commit/184a76139fdab9afa91f54096ba2194c867a6ebf)
