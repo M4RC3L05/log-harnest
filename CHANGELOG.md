@@ -1,3 +1,8 @@
+### v2.4.0 (2023-03-26)
+
+- [Fix vulnerable dependency](https://github.com/M4RC3L05/log-harnest/commit/3129045b957b919ba3ad93483e2118250528a7af)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/8d1d4c350e5cacdf384e00ed411737f78b30b574)
+
 ### v2.3.0 (2023-03-11)
 
 - [Bump nodejs version](https://github.com/M4RC3L05/log-harnest/commit/d74c8e375276c4a60035a4f9751313104942c699)
