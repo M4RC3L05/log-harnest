@@ -14,7 +14,7 @@ export class TailLogAggregatorSource extends LogAggregatorSource {
   onData(fn: (data: string) => void) {
     this.#tail.stdout.addListener("data", (data) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      fn(data.toString("utf8"));
+      fn(data.toString("utf8") as string);
     });
   }
 

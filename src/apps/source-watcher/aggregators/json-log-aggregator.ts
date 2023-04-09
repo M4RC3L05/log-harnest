@@ -13,6 +13,7 @@ const log = logger("json-log-aggregator");
 
 const isJson = (data: any) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return typeof JSON.parse(data) === "object";
   } catch {
     return false;
@@ -38,6 +39,20 @@ export class JsonLogAggregator extends LogAggregator {
     this.source.onClose((...args) => {
       log.info({ args }, `Close for "${this.source.name}"`);
     });
+  }
+
+  async flush() {
+    await this.destination.write(this.#buffer);
+
+    this.#buffer.length = 0;
+  }
+
+  async close() {
+    await this.source.close();
+    await this.destination.close();
+
+    this.#aggregatorAbortController.abort();
+    await this.flush();
   }
 
   #timeoutFlush() {
@@ -82,21 +97,9 @@ export class JsonLogAggregator extends LogAggregator {
         .split("\n")
         .map((rawLine) => rawLine.trim())
         .filter((rawLine) => rawLine.length > 0 && isJson(rawLine))
-        .map((rawLine) => this.destination.makeLog(this.source.name, JSON.parse(rawLine), this.source.maps)),
+        .map((rawLine) =>
+          this.destination.makeLog(this.source.name, JSON.parse(rawLine) as Record<string, unknown>, this.source.maps),
+        ),
     );
-  }
-
-  async flush() {
-    await this.destination.write(this.#buffer);
-
-    this.#buffer.length = 0;
-  }
-
-  async close() {
-    await this.source.close();
-    await this.destination.close();
-
-    this.#aggregatorAbortController.abort();
-    await this.flush();
   }
 }

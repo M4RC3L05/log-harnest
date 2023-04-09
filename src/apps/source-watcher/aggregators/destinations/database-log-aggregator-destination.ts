@@ -6,16 +6,6 @@ import { db } from "#src/database/db.js";
 import { join } from "#src/utils/sql.js";
 
 export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
-  #logToDb({ name, maps, raw, timestamp }: Log) {
-    return {
-      name: logResolvers.resolveName(raw, maps, name),
-      level: logResolvers.resolveLevel(raw, maps, "info"),
-      timestamp: logResolvers.resolveTimestamp(raw, maps, timestamp),
-      message: logResolvers.resolveMessage(raw, maps, raw?.message ?? raw?.msg ?? ""),
-      data: JSON.stringify(raw ?? {}),
-    };
-  }
-
   async write(logs: Log | Log[]) {
     if (!db.open) return;
 
@@ -39,5 +29,15 @@ export class DatabaseLogAggregatorDestination extends LogAggregatorDestination {
       values
       $${join(values, sql`,`)}
     `);
+  }
+
+  #logToDb({ name, maps, raw, timestamp }: Log) {
+    return {
+      name: logResolvers.resolveName(raw, maps, name),
+      level: logResolvers.resolveLevel(raw, maps, "info"),
+      timestamp: logResolvers.resolveTimestamp(raw, maps, timestamp),
+      message: logResolvers.resolveMessage(raw, maps, raw?.message ?? raw?.msg ?? ""),
+      data: JSON.stringify(raw ?? {}),
+    };
   }
 }

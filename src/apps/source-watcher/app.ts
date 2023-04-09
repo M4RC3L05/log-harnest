@@ -26,6 +26,7 @@ export const app = () => {
   for (const source of Object.values(sources)) {
     aggregatorInstances.push(
       // @ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       new aggregators[source.config.aggregator](
         // @ts-expect-error
         new aggregatorSources[source.config.source](source),

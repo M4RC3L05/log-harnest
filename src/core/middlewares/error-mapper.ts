@@ -21,6 +21,7 @@ export const errorMapperMiddleware = async (ctx: Context, next: Next) => {
     }
 
     if (error instanceof Error && error?.name === "UnauthorizedError") {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       for (const [key, value] of Object.entries((error as any)?.headers ?? {})) ctx.set(key, value as any);
 
       ctx.status = (error as any).status as number;

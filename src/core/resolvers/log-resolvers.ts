@@ -45,9 +45,10 @@ export const resolveName = (log: Record<string, unknown>, maps: Record<string, s
 };
 
 export const resolveTimestamp = (log: Record<string, unknown>, maps: Record<string, string>, def: Date) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return Number.isNaN(new Date(log?.[maps?.timestamp] as any).getTime())
     ? def
-    : new Date(log?.[maps?.timestamp] as any);
+    : new Date(log?.[maps?.timestamp] as string);
 };
 
 export const resolveMessage = (log: Record<string, unknown>, maps: Record<string, string>, def: unknown) => {

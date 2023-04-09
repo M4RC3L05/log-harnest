@@ -9,4 +9,5 @@ const transport = pino.transport({
   options: { name: "log-harnest" },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 export const logger = (name: string) => pino({ name, level: config.get("logger.level") }, transport);
