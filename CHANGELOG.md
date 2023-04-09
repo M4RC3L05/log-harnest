@@ -1,3 +1,8 @@
+### v2.5.0 (2023-04-09)
+
+- [Fix lint errors](https://github.com/M4RC3L05/log-harnest/commit/8fbbd46aca860e1a64db5cb4202ddd1d9862e604)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/102e79b16c169be02bb82f0d251278ee6aabfcc1)
+
 ### v2.4.0 (2023-03-26)
 
 - [Fix vulnerable dependency](https://github.com/M4RC3L05/log-harnest/commit/3129045b957b919ba3ad93483e2118250528a7af)
