@@ -1,3 +1,9 @@
+### v2.6.0 (2023-04-23)
+
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/a3be1710e53c0bfdd61027d20b0dd67e2b2104b2)
+- [Make top bar sticky to fix mobile logs cut off bug](https://github.com/M4RC3L05/log-harnest/commit/2b04985b218067d8e54a3c409f54a854c2b9d95c)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/df849a67eae95b0065e4e77783e39814c3f2e0c3)
+
 ### v2.5.0 (2023-04-09)
 
 - [Fix lint errors](https://github.com/M4RC3L05/log-harnest/commit/8fbbd46aca860e1a64db5cb4202ddd1d9862e604)
