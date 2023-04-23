@@ -1,7 +1,7 @@
 /* eslint-disable n/file-extension-in-import */
 
 import { ObjectInspector, chromeDark } from "react-inspector";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { html } from "htm/preact";
 import { render } from "preact";
 import { serializeError } from "serialize-error";
@@ -130,7 +130,7 @@ const LogFilters = ({
   const debouncedSetMessage = useMemo(() => debounce(setMessage, 250), [setMessage]);
 
   return html`
-    <div class="row g-3 pt-5 pb-5 text-center">
+    <div class="row g-3 pt-4 pb-4 text-center">
       <div class="col-12">
         <div class="input-group">
           <input
@@ -232,23 +232,7 @@ const App = () => {
     parsedUrl.searchParams.has("to") ? new Date(parsedUrl.searchParams.get("to")) : undefined,
   );
   const [refreshLogs, setRefreshLogs] = useState(false);
-  const [hasScroll, setHasScroll] = useState(false);
-  const appRef = useRef(globalThis.document.querySelector("#app"));
   const colorModePerfRef = useRef(globalThis.matchMedia("(prefers-color-scheme: dark)"));
-
-  const checkAppScroll = useCallback(() => {
-    if (!appRef.current) {
-      setHasScroll(false);
-
-      return;
-    }
-
-    if (appRef.current.scrollTop > 10) {
-      setHasScroll(true);
-    } else {
-      setHasScroll(false);
-    }
-  }, []);
 
   useLayoutEffect(() => {
     const colorMode = colorModePerfRef.current.matches ? "dark" : "light";
@@ -282,26 +266,15 @@ const App = () => {
     globalThis.history.replaceState(undefined, undefined, url.toString());
   }, [name, level, message, from, to]);
 
-  useEffect(() => {
-    if (appRef.current) {
-      checkAppScroll();
-
-      appRef.current.addEventListener("scroll", checkAppScroll);
-
-      return () => {
-        appRef.current?.removeEventListener("scroll", checkAppScroll);
-      };
-    }
-  }, []);
-
   return html`
     <div class="container-fluid">
       <div
-        class="row position-fixed top-0 end-0 start-0"
+        class="row"
         style=${{
+          position: "sticky",
+          top: 0,
           zIndex: 1000,
           background: "var(--bs-body-bg)",
-          boxShadow: hasScroll ? "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)" : undefined,
           transition: "box-shadow .3s ease-in-out",
           paddingRight: "calc(var(--bs-gutter-x) * .5)",
           paddingLeft: "calc(var(--bs-gutter-x) * .5)",
@@ -324,7 +297,7 @@ const App = () => {
         </div>
       </div>
 
-      <div class="row" style=${{ marginTop: "184px", fontFamily: "monospace", fontSize: ".8em" }}>
+      <div class="row" style=${{ fontFamily: "monospace", fontSize: ".8em" }}>
         <div class="col-lg-10 offset-lg-1 mb-4">
           <${Logs}
             name=${name}
