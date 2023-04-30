@@ -1,3 +1,8 @@
+### v2.7.0 (2023-04-30)
+
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/0b3f240fedfaf1c94d4e9e9b98344fbc25c36143)
+- [Update node version on config files](https://github.com/M4RC3L05/log-harnest/commit/57eda777a0086804ab987c9e7f8f75969184d30c)
+
 ### v2.6.0 (2023-04-23)
 
 - [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/a3be1710e53c0bfdd61027d20b0dd67e2b2104b2)
