@@ -1,3 +1,7 @@
+### v2.8.0 (2023-06-11)
+
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/f9631dc5f3c4d7d8bb79ec06a3c81cd1ee3018bf)
+
 ### v2.7.0 (2023-04-30)
 
 - [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/0b3f240fedfaf1c94d4e9e9b98344fbc25c36143)
