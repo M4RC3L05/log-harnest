@@ -1,3 +1,7 @@
+### v3.0.1 (2023-06-20)
+
+- [Revert to use transport inplace](https://github.com/M4RC3L05/log-harnest/commit/7dbda686aff491320b1f5ad79c991b94e93cf0f6)
+
 ### v3.0.0 (2023-06-20)
 
 - [Update process util](https://github.com/M4RC3L05/log-harnest/commit/5028f7eaf4f5d39cb3ea8ca8a2a958bc0e28aa72)
