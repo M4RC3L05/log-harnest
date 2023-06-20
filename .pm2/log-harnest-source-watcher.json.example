@@ -2,6 +2,7 @@
   "name": "@log-harnest/source-watcher",
   "cwd": "/path/to/app",
   "script": "src/apps/source-watcher/main.ts",
+  "interpreter": "node",
   "node_args": ["--no-warnings", "--loader=ts-node/esm"],
   "exec_mode": "fork",
   "watch": false,

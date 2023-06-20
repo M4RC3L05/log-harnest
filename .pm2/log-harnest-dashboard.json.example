@@ -2,6 +2,7 @@
   "name": "@log-harnest/dashboard",
   "cwd": "/path/to/app",
   "script": "src/apps/dashboard/main.ts",
+  "interpreter": "node",
   "node_args": ["--no-warnings", "--loader=ts-node/esm"],
   "exec_mode": "fork",
   "watch": false,
