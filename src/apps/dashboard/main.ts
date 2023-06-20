@@ -1,3 +1,6 @@
+import process from "node:process";
+import { promisify } from "node:util";
+
 import config from "config";
 
 import { addHook } from "#src/utils/process.js";
@@ -9,13 +12,24 @@ const { host, port } = config.get<{ host: string; port: number }>("apps.dashboar
 
 const server = app().listen(port, host, () => {
   log.info({ host, port }, "Serving");
+
+  if (typeof process.send === "function") {
+    log.info("Sending ready signal");
+
+    process.send("ready");
+  }
+});
+const pClose = promisify<void>(server.close).bind(server);
+
+server.addListener("close", () => {
+  log.info("Server closed");
 });
 
 addHook({
   async handler() {
-    await new Promise((resolve) => {
-      server.once("close", resolve).close();
+    await pClose().catch((error) => {
+      log.error(error, "Could not close server");
     });
   },
-  name: "dashobard",
+  name: "dashboard",
 });
