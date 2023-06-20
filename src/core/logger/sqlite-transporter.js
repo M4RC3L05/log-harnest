@@ -1,13 +1,8 @@
-#!/usr/bin/env -S node --no-warnings --loader ts-node/esm
-
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import process from "node:process";
 
 import sql, { Database } from "@leafac/sqlite";
 import build from "pino-abstract-transport";
 import config from "config";
-import pump from "pump";
 
 export const logLevels = {
   labels: {
@@ -22,37 +17,37 @@ export const logLevels = {
   },
 };
 
-const isJson = (data: unknown) => {
+const isJson = (data) => {
   try {
-    return typeof JSON.parse(data as string) === "object";
+    return typeof JSON.parse(data) === "object";
   } catch {
     return false;
   }
 };
 
-const transporter = ({ name, component }: { name: string; component?: string }) => {
+const transporter = ({ name, component }) => {
   const db = new Database(config.get("database.path"))
     .execute(sql`pragma journal_mode = WAL`)
     .execute(sql`pragma busy_timeout = 5000`)
     .execute(sql`pragma foreign_keys = ON`);
-  let shouldClose = false;
-  let closeTimeout: NodeJS.Timeout | undefined;
 
   process.once("SIGINT", () => {
-    shouldClose = true;
+    db.close();
   });
 
   process.once("SIGTERM", () => {
-    shouldClose = true;
+    db.close();
   });
 
-  return (build as any as typeof build.default)(
+  return build(
     async (source) => {
       for await (const object of source) {
-        if (!db.open) break;
         if (!isJson(object)) continue;
 
-        const objectParsed = JSON.parse(object as string) as { level: number; msg: string; time: number };
+        // Output object
+        console.log(object);
+
+        const objectParsed = JSON.parse(object);
 
         const row = {
           name,
@@ -68,18 +63,8 @@ const transporter = ({ name, component }: { name: string; component?: string }) 
           insert into "logs"
           ("name", "level", "message", "timestamp", "data")
           values
-          (${row.name}, ${logLevels.labels[row.level as keyof (typeof logLevels)["labels"]]}, ${row.message}, ${
-          row.timestamp
-        }, ${row.data})
+          (${row.name}, ${logLevels.labels[row.level]}, ${row.message}, ${row.timestamp}, ${row.data})
         `);
-
-        if (shouldClose) {
-          clearTimeout(closeTimeout);
-
-          closeTimeout = setTimeout(() => {
-            db.close();
-          }, 1000);
-        }
       }
     },
     {
@@ -93,4 +78,4 @@ const transporter = ({ name, component }: { name: string; component?: string }) 
   );
 };
 
-pump(process.stdin, transporter({ name: "log-harnest" }));
+export default transporter;
