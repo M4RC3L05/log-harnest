@@ -1,14 +1,14 @@
-/* eslint-disable n/file-extension-in-import */
-
 import { ObjectInspector, chromeDark } from "react-inspector";
-import { useEffect, useMemo, useState } from "preact/hooks";
-import { html } from "htm/preact";
-import { render } from "preact";
+import React, { StrictMode, useEffect, useMemo, useState } from "react";
+import { createRoot } from "react-dom/client";
+import htm from "htm";
 import { serializeError } from "serialize-error";
 
 import { levelColor, levelEmoji, levelIndexes } from "./utils/log.js";
 import { useGetIndexedSources, useGetLogs } from "./hooks/mod.js";
 import { debounce } from "./utils/fn.js";
+
+const html = htm.bind(React.createElement);
 
 const LogInspector = ({ data }) => {
   return html`
@@ -298,4 +298,8 @@ const App = () => {
   `;
 };
 
-render(html`<${App} />`, globalThis.document.querySelector("#app"));
+createRoot(globalThis.document.querySelector("#app")).render(html`
+  <${StrictMode}>
+    <${App} />
+  <//>
+`);

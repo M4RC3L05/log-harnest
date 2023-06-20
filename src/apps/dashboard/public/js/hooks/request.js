@@ -1,6 +1,4 @@
-/* eslint-disable n/file-extension-in-import */
-
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { logsApi } from "../api/mod.js";
 
