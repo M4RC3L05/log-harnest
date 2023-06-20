@@ -1,3 +1,13 @@
+### v3.0.0 (2023-06-20)
+
+- [Update process util](https://github.com/M4RC3L05/log-harnest/commit/5028f7eaf4f5d39cb3ea8ca8a2a958bc0e28aa72)
+- [Improve logger and transport](https://github.com/M4RC3L05/log-harnest/commit/a16852610707cb98093d9537a734ba5d703b9cf6)
+- [Make use of esmsh](https://github.com/M4RC3L05/log-harnest/commit/03e8dfa647004344e3d9a4768313e49b4489cad5)
+- [Add loading page](https://github.com/M4RC3L05/log-harnest/commit/67e201e093e56e436c96cc4e7d42eacbf175ce98)
+- [Add favicon](https://github.com/M4RC3L05/log-harnest/commit/cb290da67a886d2c2ccd916da03208782efaac63)
+- [Add data gitkeep](https://github.com/M4RC3L05/log-harnest/commit/0021fcef6187fc050a6ab4b855f6809d7fb3de98)
+- [Update sqlite version](https://github.com/M4RC3L05/log-harnest/commit/4e45eaa0297b4512fefe6d32b6814926b0a16bd5)
+
 ### v2.8.0 (2023-06-11)
 
 - [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/f9631dc5f3c4d7d8bb79ec06a3c81cd1ee3018bf)
