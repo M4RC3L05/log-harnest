@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="init-loading">
+        <img src="./loading.png" width="128" height="128" class="img-fluid mb-4" />
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
 
     <script type="importmap">
       {
@@ -23,6 +30,21 @@
           "serialize-error": "/serialize-error/index.js"
         }
       }
+    </script>
+    <script type="module">
+      const getPreferredTheme = () => {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      };
+
+      const setTheme = (theme) => {
+        document.documentElement.setAttribute("data-bs-theme", theme);
+      };
+
+      setTheme(getPreferredTheme());
+
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        setTheme(getPreferredTheme());
+      });
     </script>
     <script type="module" src="/js/app.js"></script>
   </body>

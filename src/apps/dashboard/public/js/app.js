@@ -1,7 +1,7 @@
 /* eslint-disable n/file-extension-in-import */
 
 import { ObjectInspector, chromeDark } from "react-inspector";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { html } from "htm/preact";
 import { render } from "preact";
 import { serializeError } from "serialize-error";
@@ -232,22 +232,6 @@ const App = () => {
     parsedUrl.searchParams.has("to") ? new Date(parsedUrl.searchParams.get("to")) : undefined,
   );
   const [refreshLogs, setRefreshLogs] = useState(false);
-  const colorModePerfRef = useRef(globalThis.matchMedia("(prefers-color-scheme: dark)"));
-
-  useLayoutEffect(() => {
-    const colorMode = colorModePerfRef.current.matches ? "dark" : "light";
-    globalThis.document.documentElement.dataset.bsTheme = colorMode;
-
-    const colorModeChange = (event) => {
-      globalThis.document.documentElement.dataset.bsTheme = event?.matches ? "dark" : "light";
-    };
-
-    colorModePerfRef.current.addEventListener("change", colorModeChange);
-
-    return () => {
-      colorModePerfRef.current.removeEventListener("change", colorModeChange);
-    };
-  }, []);
 
   useEffect(() => {
     const url = new URL(globalThis.location.href);
