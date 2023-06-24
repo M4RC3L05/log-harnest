@@ -1,4 +1,13 @@
-### v3.0.1 (2023-06-20)
+### v4.0.0 (2023-06-24)
+
+- [Fix vulnerability](https://github.com/M4RC3L05/log-harnest/commit/b1a34c7f56a2fe8b2df4dfaad2ff35d046b7251a)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/3f465cd1dbc112a997016d8878f5d079352de772)
+- [Remove unsused deps](https://github.com/M4RC3L05/log-harnest/commit/1db94dc6f13eb4ff486db1353965472a1eba387f)
+- [Make esmsh be proxied form the server and allow to customize esm sh endpoin](https://github.com/M4RC3L05/log-harnest/commit/560262a235688a73bf7bcb93546bbcfe73771f36)
+- [Remove unused deps](https://github.com/M4RC3L05/log-harnest/commit/0c31e7d969908215e87bc543173f2a8c12496276)
+- [Add \`interpreter\` option to pm2 files](https://github.com/M4RC3L05/log-harnest/commit/7228c0097f25affe76fd05b8e5ecd18e2363f632)
+
+### v3.0.1 (2023-06-21)
 
 - [Revert to use transport inplace](https://github.com/M4RC3L05/log-harnest/commit/7dbda686aff491320b1f5ad79c991b94e93cf0f6)
 
