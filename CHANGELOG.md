@@ -1,3 +1,7 @@
+### v4.0.1 (2023-06-24)
+
+- [Update nodejs](https://github.com/M4RC3L05/log-harnest/commit/bac1a92caaa843d98311eb76e3d357d94cad3366)
+
 ### v4.0.0 (2023-06-24)
 
 - [Fix vulnerability](https://github.com/M4RC3L05/log-harnest/commit/b1a34c7f56a2fe8b2df4dfaad2ff35d046b7251a)
