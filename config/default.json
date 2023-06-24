@@ -14,7 +14,8 @@
       "basicAuth": {
         "username": "foo",
         "password": "bar"
-      }
+      },
+      "esmsh": "https://esm.sh/"
     }
   },
   "database": {
