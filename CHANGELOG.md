@@ -1,3 +1,9 @@
+### v4.1.0 (2023-07-29)
+
+- [Add table indexes](https://github.com/M4RC3L05/log-harnest/commit/009fd8d768b2480c1ca85001722b13f4dc772940)
+- [Fix lint](https://github.com/M4RC3L05/log-harnest/commit/523df0cb6d0a3b69b411c3a4143ba33ab4e99ba0)
+- [Update dependencies](https://github.com/M4RC3L05/log-harnest/commit/919f6513edf36a6097bc084f23d407e463f34f2b)
+
 ### v4.0.1 (2023-06-24)
 
 - [Update nodejs](https://github.com/M4RC3L05/log-harnest/commit/bac1a92caaa843d98311eb76e3d357d94cad3366)

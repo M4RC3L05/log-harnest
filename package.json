@@ -1,6 +1,6 @@
 {
   "name": "log-harnest",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "A self host solution to watch and index logs",
   "keywords": [],
   "license": "MIT",
