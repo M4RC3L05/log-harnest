@@ -12,9 +12,8 @@ export const app = () => {
   koa.use(basicAuth({ name: username, pass: password }));
   koa.use(koaStatic("./src/apps/dashboard/public"));
   koa.use(
-    proxy("/deps", {
+    proxy(/^\/(stable|v\d+)/, {
       target: config.get("apps.dashboard.esmsh"),
-      rewrite: (path) => path.replace("/deps", ""),
       changeOrigin: true,
     }),
   );
