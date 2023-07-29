@@ -1,3 +1,7 @@
+### v4.1.1 (2023-07-29)
+
+- [Fix fontend deps proxy](https://github.com/M4RC3L05/log-harnest/commit/96a9d1f8516e6acdc4e5d94a260b65ee46a785b9)
+
 ### v4.1.0 (2023-07-29)
 
 - [Add table indexes](https://github.com/M4RC3L05/log-harnest/commit/009fd8d768b2480c1ca85001722b13f4dc772940)
