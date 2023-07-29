@@ -97,17 +97,16 @@ const Logs = ({ name, from, to, message, level, refreshLogs, setRefreshLogs }) =
   return html`
     <div>
       ${data.map(
-        (log, index) =>
-          html`
-            <div
-              key=${`${log.level}||${log.name}||${log.timestamp}||${log.data}`}
-              style=${{
-                borderBottom: index === data.length - 1 ? undefined : "1px solid var(--bs-border-color-translucent)",
-              }}
-            >
-              <${LogItem} ...${log} />
-            </div>
-          `,
+        (log, index) => html`
+          <div
+            key=${`${log.level}||${log.name}||${log.timestamp}||${log.data}`}
+            style=${{
+              borderBottom: index === data.length - 1 ? undefined : "1px solid var(--bs-border-color-translucent)",
+            }}
+          >
+            <${LogItem} ...${log} />
+          </div>
+        `,
       )}
     </div>
   `;
